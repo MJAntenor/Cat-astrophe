@@ -11,6 +11,8 @@ public class Duchess : MonoBehaviour
     public bool isHidden = false;
     public float moveSpeed;
 
+    //Test Comment
+
     void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
