@@ -10,28 +10,28 @@ public class Duchess : MonoBehaviour
     public bool direction;
     public bool isHidden = false;
     public float moveSpeed;
+    public float maxPauseTime = 150;
+    public float time;
 
-    //Test Comment
-
+    
+    //Slightly Improved Code (still need a pause)
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
-            if (!isHidden)
+            if (Input.GetKey(KeyCode.RightArrow) && !isHidden)
             {
-                Hide();
+             
             }
-            else
-            {
-                isHidden = false;
-            }
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            if (!isHidden)
+            else if (!isHidden)
             {
                 direction = false;
                 Movement();
+            }
+
+            else if (Input.GetKey(KeyCode.RightArrow) && isHidden)
+            {
+                isHidden = false;
             }
         }
         else if (Input.GetKey(KeyCode.RightArrow))
@@ -43,7 +43,6 @@ public class Duchess : MonoBehaviour
             }
         }
     }
-
     public void Movement()
     {
         if (direction)
@@ -65,6 +64,35 @@ public class Duchess : MonoBehaviour
         print("YOU'VE HIDDEN!!!");
         isHidden = true;
     }
-
-
 }
+// Past Update Code (just for backup)
+/*    
+    void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            if (Input.GetKey(KeyCode.RightArrow) && !isHidden)
+            {
+                Hide();
+            }
+            else if (!isHidden)
+            {
+                direction = false;
+                Movement();
+            }
+
+            else if (Input.GetKey(KeyCode.RightArrow) && isHidden)
+            {
+                isHidden = false;
+            }
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            if (!isHidden)
+            {
+                direction = true;
+                Movement();
+            }
+        }
+    }
+*/
