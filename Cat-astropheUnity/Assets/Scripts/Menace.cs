@@ -32,7 +32,7 @@ public class Menace : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "DuchessCollider")
+        if (collision.gameObject.name == "DuchessCollider") // && !isHidden
         {
             Debug.Log("GameOver!");
         }

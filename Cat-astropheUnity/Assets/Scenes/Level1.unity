@@ -791,7 +791,7 @@ GameObject:
   - component: {fileID: 1539656359}
   - component: {fileID: 1539656361}
   - component: {fileID: 1539656360}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: DuchessCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
