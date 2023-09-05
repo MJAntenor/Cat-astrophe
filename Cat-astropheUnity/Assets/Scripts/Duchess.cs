@@ -20,7 +20,7 @@ public class Duchess : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            if (Input.GetKey(KeyCode.RightArrow) && !isHidden && canHide)
+            if (Input.GetKey(KeyCode.RightArrow) && !isHidden)
             {
                 Hide();
             }
