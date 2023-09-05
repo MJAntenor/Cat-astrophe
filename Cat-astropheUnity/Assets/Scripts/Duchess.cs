@@ -9,17 +9,18 @@ public class Duchess : MonoBehaviour
     public Rigidbody2D rigidbodyComponent;
     public bool direction;
     public bool isHidden = false;
+    public bool canHide = false;
     public float moveSpeed;
     public float maxPauseTime = 150;
     public float time;
 
-    
+
     //Slightly Improved Code (still need a pause)
     void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            if (Input.GetKey(KeyCode.RightArrow) && !isHidden)
+            if (Input.GetKey(KeyCode.RightArrow) && !isHidden && canHide)
             {
                 Hide();
             }
@@ -64,6 +65,27 @@ public class Duchess : MonoBehaviour
         print("YOU'VE HIDDEN!!!");
         isHidden = true;
     }
+
+    // Overlapped w/ Furniture
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "Furniture")
+        {
+            canHide = true;
+            print("CanHide");
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "Furniture")
+        {
+            canHide = false;
+            print("Can't Hide");
+        }
+    }
+
 }
 // Past Update Code (just for backup)
 /*    
