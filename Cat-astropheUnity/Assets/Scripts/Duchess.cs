@@ -21,7 +21,7 @@ public class Duchess : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.RightArrow) && !isHidden)
             {
-             
+                Hide();
             }
             else if (!isHidden)
             {
