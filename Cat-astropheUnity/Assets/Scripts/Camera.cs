@@ -11,6 +11,7 @@ public class Camera : MonoBehaviour
     Vector2 pos;
     private void Start()
     {
+        // Randomly Generates Furniture
         for(int i = 0; i < numFurniture; i++)
         {
             screenX = Random.Range(-12, 60);
@@ -25,6 +26,11 @@ public class Camera : MonoBehaviour
     { 
         //makes camera sidescroll
         this.transform.position = new Vector3(this.transform.position.x + 0.001f, this.transform.position.y, this.transform.position.z); 
+        // Pushes camera if Duchess gets too far ahead
+        if (Duchess.Instance.transform.position.x > this.transform.position.x + 7)
+        {
+            this.transform.position = new Vector3(this.transform.position.x + 0.010f, this.transform.position.y, this.transform.position.z);
+        }
     }
 
 }
