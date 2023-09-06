@@ -29,6 +29,10 @@ public class Menace : MonoBehaviour
                 isFacingRight = true;
             }
         }
+        if (collision.gameObject.name == "DuchessCollider") // && !isHidden
+        {
+            Debug.Log("GameOver!");
+        }
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {

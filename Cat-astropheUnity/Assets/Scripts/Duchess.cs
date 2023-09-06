@@ -6,6 +6,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Duchess : MonoBehaviour
 {
+    public static Duchess Instance;
     public Rigidbody2D rigidbodyComponent;
     public bool direction;
     public bool isHidden = false;
@@ -14,13 +15,17 @@ public class Duchess : MonoBehaviour
     public float maxPauseTime = 150;
     public float time;
 
+    public void Awake()
+    {
+        Duchess.Instance = this;
+    }
 
     //Slightly Improved Code (still need a pause)
     void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            if (Input.GetKey(KeyCode.RightArrow) && !isHidden)
+            if (Input.GetKey(KeyCode.RightArrow) && !isHidden && canHide)
             {
                 Hide();
             }
@@ -61,7 +66,7 @@ public class Duchess : MonoBehaviour
     }
     public void Hide()
     {
-        this.transform.localScale = new Vector3(this.transform.localScale.x - 0.0001f, this.transform.localScale.y - 0.0001f, this.transform.localScale.z);
+       // this.transform.localScale = new Vector3(this.transform.localScale.x - 0.0001f, this.transform.localScale.y - 0.0001f, this.transform.localScale.z);
         print("YOU'VE HIDDEN!!!");
         isHidden = true;
     }
@@ -69,22 +74,22 @@ public class Duchess : MonoBehaviour
     // Overlapped w/ Furniture
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Furniture")
+        if (collision.gameObject.name == "Furniture(Clone)")
         {
             canHide = true;
-            print("CanHide");
-            Destroy(this.gameObject);
+            Debug.Log("CanHide");
         }
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Furniture")
+        if (collision.gameObject.name == "Furniture(Clone)")
         {
             canHide = false;
-            print("Can't Hide");
+            Debug.Log("Cannot Hide");
         }
     }
+
 
 }
 // Past Update Code (just for backup)
