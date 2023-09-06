@@ -36,7 +36,7 @@ public class Menace : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "DuchessCollider") // && !isHidden
+        if (collision.gameObject.name == "DuchessCollider" && !Duchess.Instance.isHidden)
         {
             Debug.Log("GameOver!");
         }
