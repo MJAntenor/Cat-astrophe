@@ -8,6 +8,7 @@ public class Duchess : MonoBehaviour
 {
     public static Duchess Instance;
     public Rigidbody2D rigidbodyComponent;
+    public AudioSource stomp;
     public bool direction;
     public bool isHidden = false;
     public bool canHide = false;
@@ -101,9 +102,10 @@ public class Duchess : MonoBehaviour
             Debug.Log("TP Menace LVL 4");
             passCheckpoint3 = true;
         }
-        //Increase Menace's Speed if Duchess is in POV Cone
+        //Increase Menace's Speed & plays stomp if Duchess is in POV Cone
         else if (collision.gameObject.name == "POV_Cone" && !isHidden)
         {
+            stomp.Play();
             if (Menace.MIN_Instance.isFacingRight)
             {
                 Menace.MIN_Instance.moveSpeed = Menace.MIN_Instance.moveChaseSpeed;
@@ -128,6 +130,7 @@ public class Duchess : MonoBehaviour
         //Reduce Menace Speed if Duchess hides
         else if (collision.gameObject.name == "POV_Cone" || isHidden)
         {
+            stomp.Stop();
             if (Menace.MIN_Instance.isFacingRight)
             {
                 Menace.MIN_Instance.moveSpeed = moveSpeed;
