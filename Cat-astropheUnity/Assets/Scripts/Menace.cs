@@ -5,8 +5,14 @@ using UnityEngine;
 public class Menace : MonoBehaviour
 {
     public Rigidbody2D rigidbodyComponent;
+    public static Menace MIN_Instance;
     public float moveSpeed;
+    public float moveChaseSpeed;
     public bool isFacingRight = true;
+    public void Awake()
+    {
+        Menace.MIN_Instance = this;
+    }
 
     void Update()
     {
@@ -22,16 +28,16 @@ public class Menace : MonoBehaviour
             {
                 moveSpeed = -5f;
                 isFacingRight = false;
+                //Flip Cone Position
+                Chase_Cone.CONE_Instance.transform.position = new Vector3 (this.transform.position.x - 4, this.transform.position.y, this.transform.position.z);
             }
             else
             {
                 moveSpeed = 5f;
                 isFacingRight = true;
+                //Flip Cone Position
+                Chase_Cone.CONE_Instance.transform.position = new Vector3(this.transform.position.x + 4, this.transform.position.y, this.transform.position.z);
             }
-        }
-        if (collision.gameObject.name == "DuchessCollider") // && !isHidden
-        {
-            Debug.Log("GameOver!");
         }
     }
     public void OnTriggerEnter2D(Collider2D collision)

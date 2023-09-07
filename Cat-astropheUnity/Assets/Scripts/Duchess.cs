@@ -11,6 +11,9 @@ public class Duchess : MonoBehaviour
     public bool direction;
     public bool isHidden = false;
     public bool canHide = false;
+    public bool passCheckpoint1 = false;
+    public bool passCheckpoint2 = false;
+    public bool passCheckpoint3 = false;
     public float moveSpeed;
     public float maxPauseTime = 150;
     public float time;
@@ -79,6 +82,40 @@ public class Duchess : MonoBehaviour
             canHide = true;
             Debug.Log("CanHide");
         }
+        //Menace Teleports when reaching a certain wall
+        else if (collision.gameObject.name == "Back_Wall_1_Collider" && !passCheckpoint1)
+        {
+            Menace.MIN_Instance.transform.position = new Vector3( 45, (float)-0.8, this.transform.position.z);
+            Debug.Log("TP Menace LVL 2");
+            passCheckpoint1 = true;
+        }
+        else if (collision.gameObject.name == "Back_Wall_2_Collider" && !passCheckpoint2)
+        {
+            Menace.MIN_Instance.transform.position = new Vector3(75, (float)-0.8, this.transform.position.z);
+            Debug.Log("TP Menace LVL 3");
+            passCheckpoint2 = true;
+        }
+        else if (collision.gameObject.name == "Back_Wall_3_Collider" && !passCheckpoint3)
+        {
+            Menace.MIN_Instance.transform.position = new Vector3(105, (float)-0.8, this.transform.position.z);
+            Debug.Log("TP Menace LVL 4");
+            passCheckpoint3 = true;
+        }
+        //Increase Menace's Speed if Duchess is in POV Cone
+        else if (collision.gameObject.name == "POV_Cone" && !isHidden)
+        {
+            if (Menace.MIN_Instance.isFacingRight)
+            {
+                Menace.MIN_Instance.moveSpeed = Menace.MIN_Instance.moveChaseSpeed;
+                Debug.Log("RUNNN!");
+            }
+            else if (!Menace.MIN_Instance.isFacingRight )
+            {
+                Menace.MIN_Instance.moveSpeed = -Menace.MIN_Instance.moveChaseSpeed;
+                Debug.Log("RUNNN!");
+            }
+
+        }
     }
 
     public void OnTriggerExit2D(Collider2D collision)
@@ -88,8 +125,21 @@ public class Duchess : MonoBehaviour
             canHide = false;
             Debug.Log("Cannot Hide");
         }
+        //Reduce Menace Speed if Duchess hides
+        else if (collision.gameObject.name == "POV_Cone" || isHidden)
+        {
+            if (Menace.MIN_Instance.isFacingRight)
+            {
+                Menace.MIN_Instance.moveSpeed = moveSpeed;
+                Debug.Log("you good!");
+            }
+            else if (!Menace.MIN_Instance.isFacingRight)
+            {
+                Menace.MIN_Instance.moveSpeed = -moveSpeed;
+                Debug.Log("you good!");
+            }
+        }
     }
-
 
 }
 // Past Update Code (just for backup)
