@@ -9,16 +9,20 @@ public class Menace : MonoBehaviour
     public float moveSpeed;
     public float moveChaseSpeed;
     public bool isFacingRight = true;
+
+    // Singleton
     public void Awake()
     {
         Menace.MIN_Instance = this;
     }
 
+    // Set Menace Movement
     void Update()
     {
         rigidbodyComponent.velocity = new Vector2(moveSpeed, 0f);
     }
 
+    // Changes direction of Menace if hits wall
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Wall")
@@ -40,6 +44,8 @@ public class Menace : MonoBehaviour
             }
         }
     }
+
+    // Game Over if Duchess and Menace collide
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "DuchessCollider" && !Duchess.Instance.isHidden)

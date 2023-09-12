@@ -9,7 +9,7 @@ public class Duchess : MonoBehaviour
     public static Duchess Instance;
     public Rigidbody2D rigidbodyComponent;
     public AudioSource stomp;
-    public bool direction;
+    private bool direction;
     public bool isHidden = false;
     public bool canHide = false;
     public bool passCheckpoint1 = false;
@@ -19,12 +19,14 @@ public class Duchess : MonoBehaviour
     public float maxPauseTime = 150;
     public float time;
 
+    // Singleton
     public void Awake()
     {
         Duchess.Instance = this;
     }
 
-    //Slightly Improved Code (still need a pause)
+    // Slightly Improved Code (still need a pause)
+    // Controls Duchess Movement
     void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -36,7 +38,7 @@ public class Duchess : MonoBehaviour
             else if (!isHidden)
             {
                 direction = false;
-                Movement();
+                Movement(direction);
             }
 
             else if (Input.GetKey(KeyCode.RightArrow) && isHidden)
@@ -49,11 +51,13 @@ public class Duchess : MonoBehaviour
             if (!isHidden)
             {
                 direction = true;
-                Movement();
+                Movement(direction);
             }
         }
     }
-    public void Movement()
+    
+    // Duchess movement based on direction
+    public void Movement(bool direction)
     {
         if (direction)
         {
@@ -68,22 +72,25 @@ public class Duchess : MonoBehaviour
             print("Duchess Moved Left!");
         }
     }
+
+    // Marks that you've successfully hidden
     public void Hide()
     {
-       // this.transform.localScale = new Vector3(this.transform.localScale.x - 0.0001f, this.transform.localScale.y - 0.0001f, this.transform.localScale.z);
         print("YOU'VE HIDDEN!!!");
         isHidden = true;
     }
 
-    // Overlapped w/ Furniture
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        // Checks if Overlapped w/ Furniture to see if Duchess can hide
         if (collision.gameObject.name == "Furniture(Clone)")
         {
             canHide = true;
             Debug.Log("CanHide");
         }
-        //Menace Teleports when reaching a certain wall
+
+        // Menace Teleports when reaching a certain wall
+        // Will change to loop/array situation
         else if (collision.gameObject.name == "Back_Wall_1_Collider" && !passCheckpoint1)
         {
             Menace.MIN_Instance.transform.position = new Vector3( 45, (float)-0.8, this.transform.position.z);
@@ -102,7 +109,7 @@ public class Duchess : MonoBehaviour
             Debug.Log("TP Menace LVL 4");
             passCheckpoint3 = true;
         }
-        //Increase Menace's Speed & plays stomp if Duchess is in POV Cone
+        // Increase Menace's Speed & plays stomp if Duchess is in POV Cone
         else if (collision.gameObject.name == "POV_Cone" && !isHidden)
         {
             stomp.Play();
@@ -122,12 +129,13 @@ public class Duchess : MonoBehaviour
 
     public void OnTriggerExit2D(Collider2D collision)
     {
+        // Makes sure you can't hide if you're not overlapped with furniture
         if (collision.gameObject.name == "Furniture(Clone)")
         {
             canHide = false;
             Debug.Log("Cannot Hide");
         }
-        //Reduce Menace Speed if Duchess hides
+        // Reduce Menace Speed if Duchess hides
         else if (collision.gameObject.name == "POV_Cone" || isHidden)
         {
             stomp.Stop();
@@ -145,34 +153,3 @@ public class Duchess : MonoBehaviour
     }
 
 }
-// Past Update Code (just for backup)
-/*    
-    void FixedUpdate()
-    {
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            if (Input.GetKey(KeyCode.RightArrow) && !isHidden)
-            {
-                Hide();
-            }
-            else if (!isHidden)
-            {
-                direction = false;
-                Movement();
-            }
-
-            else if (Input.GetKey(KeyCode.RightArrow) && isHidden)
-            {
-                isHidden = false;
-            }
-        }
-        else if (Input.GetKey(KeyCode.RightArrow))
-        {
-            if (!isHidden)
-            {
-                direction = true;
-                Movement();
-            }
-        }
-    }
-*/
