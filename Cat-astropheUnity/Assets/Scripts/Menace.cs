@@ -51,6 +51,7 @@ public class Menace : MonoBehaviour
         if (collision.gameObject.name == "DuchessCollider" && !Duchess.Instance.isHidden)
         {
             Debug.Log("GameOver!");
+            Duchess.Instance.Caught();
         }
     }
 

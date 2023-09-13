@@ -937,7 +937,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbodyComponent: {fileID: 380835764}
   stomp: {fileID: 200150649}
-  direction: 0
   isHidden: 0
   canHide: 0
   passCheckpoint1: 0

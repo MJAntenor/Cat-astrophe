@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
+using UnityEngine.SceneManagement;
 
 public class Duchess : MonoBehaviour
 {
@@ -150,6 +151,11 @@ public class Duchess : MonoBehaviour
                 Debug.Log("you good!");
             }
         }
+    }
+
+    public void Caught()
+    {
+        SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
     }
 
 }
