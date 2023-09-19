@@ -20,7 +20,7 @@ public class Menace : MonoBehaviour
     void Update()
     {
         rigidbodyComponent.velocity = new Vector2(moveSpeed, 0f);
-    }
+    } 
 
     // Changes direction of Menace if hits wall
     public void OnCollisionEnter2D(Collision2D collision)

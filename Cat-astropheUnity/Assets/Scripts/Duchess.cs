@@ -34,11 +34,11 @@ public class Duchess : MonoBehaviour
             switch (m_currentState)
             {
                 case PlayerStates.WALK:
-                    anim_dutchess.Play("DutchessWalk");
+                   anim_dutchess.Play("DutchessWalk");
                     break;
                 case PlayerStates.HIDE:
                    anim_dutchess.Play("DutchessHide");
-                   break;
+                    break;
             }
         }
     }
@@ -78,6 +78,10 @@ public class Duchess : MonoBehaviour
                 Movement(direction);
             }
         }
+        else if (isHidden)
+        {
+            transform.position = new Vector3(transform.position.x, (float)-3.72, transform.position.z);
+        }
     }
     
     // Duchess movement based on direction
@@ -104,7 +108,9 @@ public class Duchess : MonoBehaviour
     // Marks that you've successfully hidden
     public void Hide()
     {
+
         // changes play anim state to hide
+        //Furniture.FURN_Instance.
         CurrentStates = PlayerStates.HIDE;
         print("YOU'VE HIDDEN!!!");
         isHidden = true;
