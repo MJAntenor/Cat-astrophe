@@ -9,6 +9,7 @@ public class Duchess : MonoBehaviour
 {
     public static Duchess Instance;
     public Rigidbody2D rigidbodyComponent;
+    public SpriteRenderer anim;
     public AudioSource stomp;
     public Animator anim_dutchess;
     private bool direction;
@@ -18,9 +19,8 @@ public class Duchess : MonoBehaviour
     public bool passCheckpoint1 = false;
     public bool passCheckpoint2 = false;
     public bool passCheckpoint3 = false;
-    public float hideTime = 5.0f;
+    public float hideTime = 1.0f;
     public float moveSpeed;
-    public float maxPauseTime = 150;
     //creates states for animations, when one state is on, it will play an animation.
     public enum PlayerStates
     {
@@ -51,46 +51,43 @@ public class Duchess : MonoBehaviour
         Duchess.Instance = this;
     }
 
-    // Slightly Improved Code (still need a pause)
-    // Controls Duchess Movement
+    // Controls Duchess Movement & Hide Mechanics
     void Update()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            if (Input.GetKey(KeyCode.RightArrow) && !isHidden)
+            if (Input.GetKey(KeyCode.RightArrow) && !isHidden && canHide)
             {
                 Hide();
                 canUnHide = false;
             }
-            else if (!isHidden)
+            else if (canUnHide)
             {
+                isHidden = false;
                 direction = false;
                 Movement(direction);
             }
+        }
+        else if (Input.GetKey(KeyCode.RightArrow) && canUnHide)
+        {
 
-            else if (Input.GetKey(KeyCode.RightArrow) && isHidden)
-            {
-                isHidden = false;
-            }
+            isHidden = false;
+            direction = true;
+            Movement(direction);
+          
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (isHidden && !canUnHide)
         {
-            if (!isHidden)
-            {
-                direction = true;
-                Movement(direction);
-            }
-        }
-        else if (isHidden)
-        {
-            //transform.position = new Vector3(transform.position.x, (float)-3.72, transform.position.z);
-            hideTime -= Time.deltaTime;
-            Debug.Log(hideTime);
             if (hideTime <= 0)
             {
                 canUnHide = true;
                 Debug.Log("the time has come.");
-                hideTime = 5.0f;
+                hideTime = 1.0f;
+            }
+            else
+            {
+                hideTime -= Time.deltaTime;
+                Debug.Log(hideTime);
             }
         }
     }    
@@ -101,15 +98,13 @@ public class Duchess : MonoBehaviour
         CurrentStates = PlayerStates.WALK;
         if (direction)
         {
-            anim_dutchess.SetFloat("xMove", 0); 
-            //rigidbodyComponent.MovePosition(new Vector2(moveSpeed.x * Time.deltaTime, 0));
+            anim.flipX = false;
             rigidbodyComponent.velocity = new Vector2(moveSpeed, 0f);
             print("Duchess Moved Right!");
         }
         else
         {
-            anim_dutchess.SetFloat("xMove", 1);
-            //rigidbodyComponent.MovePosition(new Vector2(-moveSpeed.x * Time.deltaTime, 0));
+            anim.flipX = true;
             rigidbodyComponent.velocity = new Vector2(-moveSpeed, 0f);
             print("Duchess Moved Left!");
         }
@@ -135,7 +130,7 @@ public class Duchess : MonoBehaviour
         }
 
         // Menace Teleports when reaching a certain wall
-        // Will change to loop/array situation
+        // Will change to loop/array situation also make menace faster each checkpoint
         else if (collision.gameObject.name == "Back_Wall_1_Collider" && !passCheckpoint1)
         {
             Menace.MIN_Instance.transform.position = new Vector3( 45, (float)-0.8, this.transform.position.z);
@@ -170,6 +165,12 @@ public class Duchess : MonoBehaviour
             }
 
         }
+        // Game Over if Duchess and Menace collide
+        else if (collision.gameObject.name == "Menace_Collider" && !Duchess.Instance.isHidden)
+        {
+            Debug.Log("GameOver!");
+            Duchess.Instance.Caught();
+        }
     }
     public void OnTriggerExit2D(Collider2D collision)
     {
@@ -193,12 +194,6 @@ public class Duchess : MonoBehaviour
                 Menace.MIN_Instance.moveSpeed = -moveSpeed;
                 Debug.Log("you good!");
             }
-        }
-        // Game Over if Duchess and Menace collide
-        else if (collision.gameObject.name == "Menace_Collider" && !Duchess.Instance.isHidden)
-        {
-            Debug.Log("GameOver!");
-            Duchess.Instance.Caught();
         }
     }
 
