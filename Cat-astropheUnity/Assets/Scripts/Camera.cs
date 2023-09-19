@@ -18,7 +18,7 @@ public class Camera : MonoBehaviour
         for(int i = 0; i < numFurniture; i++)
         {
             screenX = Random.Range(-6, 105);
-            pos = new Vector2(screenX, furniture.transform.position.y);
+            pos = new Vector2(screenX, -3.7f);
             
             Instantiate(furniture, pos, furniture.transform.rotation);
             if (IsTooClose(pos))
