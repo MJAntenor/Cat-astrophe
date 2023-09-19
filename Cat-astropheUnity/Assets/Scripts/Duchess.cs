@@ -14,9 +14,11 @@ public class Duchess : MonoBehaviour
     private bool direction;
     public bool isHidden = false;
     public bool canHide = false;
+    public bool canUnHide = true;
     public bool passCheckpoint1 = false;
     public bool passCheckpoint2 = false;
     public bool passCheckpoint3 = false;
+    public float hideTime = 5.0f;
     public float moveSpeed;
     public float maxPauseTime = 150;
     //creates states for animations, when one state is on, it will play an animation.
@@ -51,13 +53,14 @@ public class Duchess : MonoBehaviour
 
     // Slightly Improved Code (still need a pause)
     // Controls Duchess Movement
-    void FixedUpdate()
+    void Update()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            if (Input.GetKey(KeyCode.RightArrow) && !isHidden && canHide)
+            if (Input.GetKey(KeyCode.RightArrow) && !isHidden)
             {
                 Hide();
+                canUnHide = false;
             }
             else if (!isHidden)
             {
@@ -80,10 +83,17 @@ public class Duchess : MonoBehaviour
         }
         else if (isHidden)
         {
-            transform.position = new Vector3(transform.position.x, (float)-3.72, transform.position.z);
+            //transform.position = new Vector3(transform.position.x, (float)-3.72, transform.position.z);
+            hideTime -= Time.deltaTime;
+            Debug.Log(hideTime);
+            if (hideTime <= 0)
+            {
+                canUnHide = true;
+                Debug.Log("the time has come.");
+                hideTime = 5.0f;
+            }
         }
-    }
-    
+    }    
     // Duchess movement based on direction
     public void Movement(bool direction)
     {
@@ -108,11 +118,10 @@ public class Duchess : MonoBehaviour
     // Marks that you've successfully hidden
     public void Hide()
     {
-
         // changes play anim state to hide
         //Furniture.FURN_Instance.
         CurrentStates = PlayerStates.HIDE;
-        print("YOU'VE HIDDEN!!!");
+        print("Hiding!!!!");
         isHidden = true;
     }
 
