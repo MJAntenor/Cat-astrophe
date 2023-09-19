@@ -33,7 +33,7 @@ public class Camera : MonoBehaviour
         {
             this.transform.position = new Vector3(this.transform.position.x + 0.010f, this.transform.position.y, this.transform.position.z);
         }
-        if (Duchess.Instance.transform.position.x < this.transform.position.x - 11)
+        if (Duchess.Instance.transform.position.x < this.transform.position.x - 13)
         {
             Debug.Log("Game Over bc Wall");
             Duchess.Instance.Caught();

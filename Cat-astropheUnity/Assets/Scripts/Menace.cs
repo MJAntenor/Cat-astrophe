@@ -45,15 +45,5 @@ public class Menace : MonoBehaviour
         }
     }
 
-    // Game Over if Duchess and Menace collide
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.name == "DuchessCollider" && !Duchess.Instance.isHidden)
-        {
-            Debug.Log("GameOver!");
-            Duchess.Instance.Caught();
-        }
-    }
-
 }
 
