@@ -114,7 +114,6 @@ public class Duchess : MonoBehaviour
     public void Hide()
     {
         // changes play anim state to hide
-        //Furniture.FURN_Instance.
         CurrentStates = PlayerStates.HIDE;
         print("Hiding!!!!");
         isHidden = true;
