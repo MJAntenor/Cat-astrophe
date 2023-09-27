@@ -132,19 +132,19 @@ public class Duchess : MonoBehaviour
         // Will change to loop/array situation also make menace faster each checkpoint
         else if (collision.gameObject.name == "Back_Wall_1_Collider" && !passCheckpoint1)
         {
-            Menace.MIN_Instance.transform.position = new Vector3( 45, (float)-0.8, this.transform.position.z);
+            Menace.MIN_Instance.transform.position = new Vector3( 45, (float)-0.71, this.transform.position.z);
             Debug.Log("TP Menace LVL 2");
             passCheckpoint1 = true;
         }
         else if (collision.gameObject.name == "Back_Wall_2_Collider" && !passCheckpoint2)
         {
-            Menace.MIN_Instance.transform.position = new Vector3(75, (float)-0.8, this.transform.position.z);
+            Menace.MIN_Instance.transform.position = new Vector3(75, (float)-0.71, this.transform.position.z);
             Debug.Log("TP Menace LVL 3");
             passCheckpoint2 = true;
         }
         else if (collision.gameObject.name == "Back_Wall_3_Collider" && !passCheckpoint3)
         {
-            Menace.MIN_Instance.transform.position = new Vector3(105, (float)-0.8, this.transform.position.z);
+            Menace.MIN_Instance.transform.position = new Vector3(105, (float)-0.71, this.transform.position.z);
             Debug.Log("TP Menace LVL 4");
             passCheckpoint3 = true;
         }
