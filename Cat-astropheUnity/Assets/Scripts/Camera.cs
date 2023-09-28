@@ -7,7 +7,10 @@ public class Camera : MonoBehaviour
 {
     // Randomly Positioned Furniture Generator
     public GameObject furniture;
+    public static Camera CAM_Instance;
     public int numFurniture = 15;
+    public int duration = 1;
+    public int magnitude = 10;
     public int minDistance = 2;
     public bool isBehind = false;
     float screenX;
@@ -29,7 +32,10 @@ public class Camera : MonoBehaviour
             }
         }
     }
-    
+    public void Awake()
+    {
+        Camera.CAM_Instance = this;
+    }
     private void Update()
     {
         // Makes camera sidescroll
@@ -57,4 +63,21 @@ public class Camera : MonoBehaviour
         return false; // Object is not too close
     }
 
+   public IEnumerator Shake()
+   {
+       Vector3 orignalPosition = transform.position;
+       float elapsed = 0f;
+
+       while (elapsed < duration)
+       {
+           float x = Random.Range(-1f, 1f) * magnitude;
+           float y = Random.Range(-1f, 1f) * magnitude;
+
+           transform.position = new Vector3(x, y, -10f);
+           elapsed += Time.deltaTime;
+           yield return 0;
+            Debug.Log("SHAKE");
+       }
+       transform.position = orignalPosition;
+   }
 }

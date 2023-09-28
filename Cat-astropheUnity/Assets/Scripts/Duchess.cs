@@ -151,6 +151,7 @@ public class Duchess : MonoBehaviour
         // Increase Menace's Speed & plays stomp if Duchess is in POV Cone
         else if (collision.gameObject.name == "POV_Cone" && !isHidden)
         {
+            Camera.CAM_Instance.Shake();
             stomp.Play();
             if (Menace.MIN_Instance.isFacingRight)
             {
