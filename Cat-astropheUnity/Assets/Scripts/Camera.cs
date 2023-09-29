@@ -8,28 +8,33 @@ public class Camera : MonoBehaviour
     // Randomly Positioned Furniture Generator
     public GameObject furniture;
     public static Camera CAM_Instance;
-    public int numFurniture = 15;
+    public int numFurniturePerRoom = 4;
     public int duration = 1;
     public int magnitude = 10;
     public int minDistance = 2;
     public bool isBehind = false;
     float screenX;
     Vector2 pos;
+    Vector2 safePos;
     private void Start()
     {
-        // Randomly generates position on x-axis and creates furniture
-        for(int i = 0; i < numFurniture; i++)
-        {
-            screenX = Random.Range(-6, 105);
-            pos = new Vector2(screenX, -3.7f);
-            
-            Instantiate(furniture, pos, furniture.transform.rotation);
-            if (IsTooClose(pos))
-            {
-                Destroy(furniture); // Destroy the object if it's too close
-                i--; // Retry the spawn
-                Debug.Log("Too Close!");
+        // Randomly generates position on x-axis and creates furniture; broken into rooms so its fair
+        int xpos = -6;
+        int xpos2 = 17;
+        for (int i = 0; i < 4; i++)
+        { 
+          // "numFurn - i" makes it harder for later rooms!
+            for (int u = 0; u < numFurniturePerRoom - i; u++)
+            { 
+                screenX = Random.Range(xpos, xpos2);  //-6 17
+                pos = new Vector2(screenX, -3.7f);
+                Instantiate(furniture, pos, furniture.transform.rotation);
             }
+            //generates one furn closer to the start of new level so we cant get fully locked
+            safePos = new Vector2(xpos + 8, -3.7f);
+            Instantiate(furniture, safePos, furniture.transform.rotation);
+            xpos += 30;
+            xpos2 += 31;
         }
     }
     public void Awake()
@@ -51,19 +56,8 @@ public class Camera : MonoBehaviour
             Duchess.Instance.Caught();
         }
     }
-    public bool IsTooClose(Vector2 pos) //trying to figure out how to respawn furniture if its too close to another one
-    {
-        Collider[] colliders = Physics.OverlapSphere(pos, minDistance);
 
-        foreach (Collider collider in colliders)
-        {
-            return true; // Object is too close to another prefab
-        }
-
-        return false; // Object is not too close
-    }
-
-   public IEnumerator Shake()
+   public IEnumerator Shake() //DONT WORK RN
    {
        Vector3 orignalPosition = transform.position;
        float elapsed = 0f;
