@@ -31,7 +31,7 @@ public class Camera : MonoBehaviour
                 Instantiate(furniture, pos, furniture.transform.rotation);
             }
             //generates one furn closer to the start of new level so we cant get fully locked
-            safePos = new Vector2(xpos + 8, -3.7f);
+            safePos = new Vector2(xpos + 6, -3.7f);
             Instantiate(furniture, safePos, furniture.transform.rotation);
             xpos += 30;
             xpos2 += 31;
@@ -41,14 +41,14 @@ public class Camera : MonoBehaviour
     {
         Camera.CAM_Instance = this;
     }
-    private void FixedUpdate()
+    private void Update()
     {
         // Makes camera sidescroll
-        this.transform.position = new Vector3(this.transform.position.x + 0.003f, this.transform.position.y, this.transform.position.z);
+        this.transform.position = new Vector3(this.transform.position.x + 0.001f, this.transform.position.y, this.transform.position.z);
         // Pushes camera if Duchess gets too far ahead
         if (Duchess.Instance.transform.position.x > this.transform.position.x + 7)
         {
-            this.transform.position = new Vector3(this.transform.position.x + 0.020f, this.transform.position.y, this.transform.position.z);
+            this.transform.position = new Vector3(this.transform.position.x + 0.035f, this.transform.position.y, this.transform.position.z);
         }
         if (Duchess.Instance.transform.position.x < this.transform.position.x - 13)
         {
