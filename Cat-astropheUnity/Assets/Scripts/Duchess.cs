@@ -26,6 +26,7 @@ public class Duchess : MonoBehaviour
     {
         WALK,
         HIDE,
+        IDLE,
     }
     PlayerStates m_currentState;
     PlayerStates CurrentStates
@@ -40,6 +41,9 @@ public class Duchess : MonoBehaviour
                     break;
                 case PlayerStates.HIDE:
                    anim_dutchess.Play("DutchessHide");
+                    break;
+                case PlayerStates.IDLE:
+                    anim_dutchess.Play("DuchessIdle");
                     break;
             }
         }
@@ -89,6 +93,11 @@ public class Duchess : MonoBehaviour
                 hideTime -= Time.deltaTime;
                 Debug.Log(hideTime);
             }
+        }
+        else if(!isHidden)
+        {
+            //Plays Idle Anim when no input
+            CurrentStates = PlayerStates.IDLE;
         }
     }    
     // Duchess movement based on direction
