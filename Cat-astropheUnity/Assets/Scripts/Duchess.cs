@@ -167,12 +167,11 @@ public class Duchess : MonoBehaviour
                 Menace.MIN_Instance.moveSpeed = Menace.MIN_Instance.moveChaseSpeed;
                 Debug.Log("RUNNN!");
             }
-            else if (!Menace.MIN_Instance.isFacingRight )
+            else if (!Menace.MIN_Instance.isFacingRight)
             {
                 Menace.MIN_Instance.moveSpeed = -Menace.MIN_Instance.moveChaseSpeed;
                 Debug.Log("RUNNN!");
             }
-
         }
         // Game Over if Duchess and Menace collide
         else if (collision.gameObject.name == "Menace_Collider" && !Duchess.Instance.isHidden)

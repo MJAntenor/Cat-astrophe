@@ -8,7 +8,7 @@ public class Camera : MonoBehaviour
     // Randomly Positioned Furniture Generator
     public GameObject furniture;
     public static Camera CAM_Instance;
-    public int numFurniturePerRoom = 4;
+    public int numFurniturePerRoom = 7;
     public int duration = 1;
     public int magnitude = 10;
     public int minDistance = 2;
