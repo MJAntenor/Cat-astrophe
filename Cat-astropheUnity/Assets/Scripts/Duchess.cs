@@ -103,6 +103,18 @@ public class Duchess : MonoBehaviour
     // Duchess movement based on direction
     public void Movement(bool direction)
     {
+        Scene currentScene = SceneManager.GetActiveScene ();
+        string sceneName = currentScene.name;
+
+        if (sceneName == "Level1")
+        {
+            moveSpeed = 5f;
+        }
+        else if (sceneName == "Level2")
+        {
+            moveSpeed = 10f;
+        }
+
         // changes play anim state to walk
         CurrentStates = PlayerStates.WALK;
         if (direction)
@@ -131,7 +143,7 @@ public class Duchess : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision)
     {
         // Checks if Overlapped w/ Furniture to see if Duchess can hide
-        if (collision.gameObject.name == "Furniture(Clone)")
+        if (collision.gameObject.name == "Furniture(Clone)" || collision.gameObject.name == "Stool(Clone)" || collision.gameObject.name == "Box(Clone)")
         {
             canHide = true;
             Debug.Log("CanHide");

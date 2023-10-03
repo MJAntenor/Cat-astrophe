@@ -3619,7 +3619,7 @@ GameObject:
   - component: {fileID: 1671543020}
   - component: {fileID: 1671543019}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3798,6 +3798,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   furniture: {fileID: 9168536520546486131, guid: c4f5bd368f0754344b9cd38bc7b8054a, type: 3}
+  box: {fileID: 4373196677423993980, guid: 513edce8d35e3364497c0fb25e36ed79, type: 3}
+  stool: {fileID: 538925845635527556, guid: dee2ef4501756f848980f143547ddd4e, type: 3}
   numFurniturePerRoom: 5
   duration: 1
   magnitude: 10

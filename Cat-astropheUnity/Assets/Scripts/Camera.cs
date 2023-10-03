@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class Camera : MonoBehaviour
 {
     // Randomly Positioned Furniture Generator
     public GameObject furniture;
+    public GameObject box;
+    public GameObject stool;
     public static Camera CAM_Instance;
     public int numFurniturePerRoom = 7;
     public int duration = 1;
@@ -16,8 +19,22 @@ public class Camera : MonoBehaviour
     float screenX;
     Vector2 pos;
     Vector2 safePos;
+
     private void Start()
     {
+        // Depending on scene has different number of furniture per room
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        if (sceneName == "Level1")
+        {
+            numFurniturePerRoom = 6;
+        }
+        else if (sceneName == "Level2")
+        {
+            numFurniturePerRoom = 4;
+        }
+
         // Randomly generates position on x-axis and creates furniture; broken into rooms so its fair
         int xpos = -6;
         int xpos2 = 17;
@@ -36,6 +53,17 @@ public class Camera : MonoBehaviour
             xpos += 30;
             xpos2 += 31;
         }
+
+        // Instantiates two boxes and 1 stool randomly throughout level
+        for (int i = 0; i < 2; i++)
+        {
+            screenX = Random.Range(-6, 105);
+            pos = new Vector2(screenX, -3.4f);
+            Instantiate(box, pos, box.transform.rotation);
+        }
+        screenX = Random.Range(-6, 105);
+        pos = new Vector2(screenX, -2.6f);
+        Instantiate(stool, pos, stool.transform.rotation);
     }
     public void Awake()
     {
@@ -43,8 +71,17 @@ public class Camera : MonoBehaviour
     }
     private void Update()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
         // Makes camera sidescroll
-        this.transform.position = new Vector3(this.transform.position.x + 0.001f, this.transform.position.y, this.transform.position.z);
+        if (sceneName == "Level1")
+        {
+            this.transform.position = new Vector3(this.transform.position.x + 0.001f, this.transform.position.y, this.transform.position.z);
+        }
+        else if (sceneName == "Level2")
+        {
+            this.transform.position = new Vector3(this.transform.position.x + 0.005f, this.transform.position.y, this.transform.position.z);
+        }
         // Pushes camera if Duchess gets too far ahead
         if (Duchess.Instance.transform.position.x > this.transform.position.x + 7)
         {

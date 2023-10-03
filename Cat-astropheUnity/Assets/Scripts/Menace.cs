@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Menace : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Menace : MonoBehaviour
     public Animator anim_menace;
     public SpriteRenderer anim;
     public static Menace MIN_Instance;
-    public float moveSpeed;
+    public float moveSpeed = 5f;
     public float moveChaseSpeed;
     public bool isFacingRight = true;
 
@@ -22,17 +23,31 @@ public class Menace : MonoBehaviour
     void Update()
     {
         rigidbodyComponent.velocity = new Vector2(moveSpeed, 0f);
-    } 
+    }
+
+    private void Start()
+    {
+    }
 
     // Changes direction of Menace if hits wall
     public void OnCollisionEnter2D(Collision2D collision)
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
         if (collision.gameObject.tag == "Wall")
         {
             Debug.Log(collision.gameObject.name);
             if (isFacingRight)
             {
-                moveSpeed = -5f;
+                if (sceneName == "Level1")
+                {
+                    moveSpeed = -5f;
+                }
+                else if (sceneName == "Level2")
+                {
+                    moveSpeed = -10f;
+                }
                 isFacingRight = false;
                 anim.flipX = false;
                 //Flip Cone Position
@@ -40,7 +55,14 @@ public class Menace : MonoBehaviour
             }
             else
             {
-                moveSpeed = 5f;
+                if (sceneName == "Level1")
+                {
+                    moveSpeed = 5f;
+                }
+                else if (sceneName == "Level2")
+                {
+                    moveSpeed = 10f;
+                }
                 isFacingRight = true;
                 anim.flipX = true;
                 //Flip Cone Position
