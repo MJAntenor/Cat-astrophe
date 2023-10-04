@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -43,8 +44,7 @@ public class Camera : MonoBehaviour
           // "numFurn - i" makes it harder for later rooms!
             for (int u = 0; u < numFurniturePerRoom - i; u++)
             { 
-                screenX = Random.Range(xpos, xpos2);  //-6 17
-                pos = new Vector2(screenX, -3.7f);
+                pos = ChoosePosition(xpos, xpos2);
                 Instantiate(furniture, pos, furniture.transform.rotation);
             }
             //generates one furn closer to the start of new level so we cant get fully locked
@@ -65,6 +65,34 @@ public class Camera : MonoBehaviour
         pos = new Vector2(screenX, -2.6f);
         Instantiate(stool, pos, stool.transform.rotation);
     }
+
+    private Vector2 ChoosePosition(int xpos, int xpos2)
+    {
+        screenX = Random.Range(xpos, xpos2);
+        Vector2 returnValue = new Vector2 (screenX, -3.7f);
+        for (int i = 0; i < 3; i++)
+        {
+            Collider[] array = Physics.OverlapBox(returnValue, Vector3.one);
+            if (array.Length > 0)
+            {
+                screenX = Random.Range(xpos, xpos2);
+                
+            }
+            else
+            {
+
+                returnValue = new Vector2 (screenX,-3.7f);
+
+                return returnValue;
+            }
+            
+        }
+
+        return returnValue;
+
+        
+    }
+
     public void Awake()
     {
         Camera.CAM_Instance = this;
@@ -76,7 +104,7 @@ public class Camera : MonoBehaviour
         // Makes camera sidescroll
         if (sceneName == "Level1")
         {
-            this.transform.position = new Vector3(this.transform.position.x + 0.001f, this.transform.position.y, this.transform.position.z);
+            this.transform.position = new Vector3(this.transform.position.x + 0.002f, this.transform.position.y, this.transform.position.z);
         }
         else if (sceneName == "Level2")
         {
