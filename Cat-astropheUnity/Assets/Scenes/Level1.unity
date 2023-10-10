@@ -468,7 +468,7 @@ Rigidbody2D:
     m_Bits: 64
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &200150645
 MonoBehaviour:
@@ -485,8 +485,8 @@ MonoBehaviour:
   rigidbodyComponent: {fileID: 200150644}
   anim_menace: {fileID: 200150650}
   anim: {fileID: 200150646}
-  moveSpeed: 8
-  moveChaseSpeed: 10
+  moveSpeed: 6
+  moveChaseSpeed: 7
   isFacingRight: 1
 --- !u!212 &200150646
 SpriteRenderer:
@@ -549,7 +549,7 @@ Transform:
   m_GameObject: {fileID: 200150643}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.05, y: -3.6, z: 11}
+  m_LocalPosition: {x: 6.05, y: -3.6, z: 18}
   m_LocalScale: {x: 1.8105, y: 1.8105, z: 1.8105}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -979,7 +979,7 @@ Rigidbody2D:
     m_Bits: 128
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &380835765
 BoxCollider2D:
@@ -1087,7 +1087,7 @@ Transform:
   m_GameObject: {fileID: 380835763}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.916, y: -3.72, z: 0}
+  m_LocalPosition: {x: -16.6, y: -3.72, z: 0}
   m_LocalScale: {x: 0.19060647, y: 0.19060647, z: 0.19060647}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1116,8 +1116,10 @@ MonoBehaviour:
   passCheckpoint1: 0
   passCheckpoint2: 0
   passCheckpoint3: 0
+  Level2: 0
+  passhalfLV1: 0
   hideTime: 1
-  moveSpeed: 4
+  moveSpeed: 6
 --- !u!95 &380835769
 Animator:
   serializedVersion: 5
@@ -2465,6 +2467,83 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1087179009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1087179011}
+  - component: {fileID: 1087179010}
+  m_Layer: 0
+  m_Name: CheckLV1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &1087179010
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087179009}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!4 &1087179011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087179009}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 49.14, y: -3.87, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1129467813
 GameObject:
   m_ObjectHideFlags: 0
@@ -3779,7 +3858,7 @@ Transform:
   m_GameObject: {fileID: 1673807734}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.53, y: 0.3, z: -10}
+  m_LocalPosition: {x: -11.2140045, y: 0.3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3804,6 +3883,8 @@ MonoBehaviour:
   duration: 1
   magnitude: 10
   minDistance: 2
+  level1speed: 0.002
+  level2speed: 0.005
   isBehind: 0
 --- !u!1 &1720027880
 GameObject:
@@ -4989,3 +5070,4 @@ SceneRoots:
   - {fileID: 718676892}
   - {fileID: 2103981123}
   - {fileID: 1671543020}
+  - {fileID: 1087179011}

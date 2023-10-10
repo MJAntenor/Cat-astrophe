@@ -44,7 +44,7 @@ public class Menace : MonoBehaviour
                 {
                     moveSpeed = -5f;
                 }
-                else if (sceneName == "Level2")
+                if (sceneName == "Level2" || sceneName == "GameOver")
                 {
                     moveSpeed = -10f;
                 }

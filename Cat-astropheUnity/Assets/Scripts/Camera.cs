@@ -16,6 +16,8 @@ public class Camera : MonoBehaviour
     public int duration = 1;
     public int magnitude = 10;
     public int minDistance = 2;
+    public float level1speed = .002f; 
+    public float level2speed = .005f;
     public bool isBehind = false;
     float screenX;
     Vector2 pos;
@@ -55,14 +57,14 @@ public class Camera : MonoBehaviour
         }
 
         // Instantiates two boxes and 1 stool randomly throughout level
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             screenX = Random.Range(-6, 105);
-            pos = new Vector2(screenX, -3.4f);
+            pos = new Vector2(screenX, -3.5f);
             Instantiate(box, pos, box.transform.rotation);
         }
         screenX = Random.Range(-6, 105);
-        pos = new Vector2(screenX, -2.6f);
+        pos = new Vector2(screenX, -2.9f);
         Instantiate(stool, pos, stool.transform.rotation);
     }
 
@@ -104,11 +106,11 @@ public class Camera : MonoBehaviour
         // Makes camera sidescroll
         if (sceneName == "Level1")
         {
-            this.transform.position = new Vector3(this.transform.position.x + 0.002f, this.transform.position.y, this.transform.position.z);
+            this.transform.position = new Vector3(this.transform.position.x + level1speed, this.transform.position.y, this.transform.position.z);
         }
         else if (sceneName == "Level2")
         {
-            this.transform.position = new Vector3(this.transform.position.x + 0.005f, this.transform.position.y, this.transform.position.z);
+            this.transform.position = new Vector3(this.transform.position.x + level2speed, this.transform.position.y, this.transform.position.z);
         }
         // Pushes camera if Duchess gets too far ahead
         if (Duchess.Instance.transform.position.x > this.transform.position.x + 7)

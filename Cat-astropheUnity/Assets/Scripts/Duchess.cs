@@ -19,6 +19,8 @@ public class Duchess : MonoBehaviour
     public bool passCheckpoint1 = false;
     public bool passCheckpoint2 = false;
     public bool passCheckpoint3 = false;
+    public bool Level2 = false;
+    public bool passhalfLV1 = false;
     public float hideTime = 1.0f;
     public float moveSpeed;
     //creates states for animations, when one state is on, it will play an animation.
@@ -56,7 +58,7 @@ public class Duchess : MonoBehaviour
     }
 
     // Controls Duchess Movement & Hide Mechanics
-    void Update()
+    void Update() 
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -99,7 +101,8 @@ public class Duchess : MonoBehaviour
             //Plays Idle Anim when no input
             CurrentStates = PlayerStates.IDLE;
         }
-    }    
+
+    }
     // Duchess movement based on direction
     public void Movement(bool direction)
     {
@@ -108,12 +111,13 @@ public class Duchess : MonoBehaviour
 
         if (sceneName == "Level1")
         {
-            moveSpeed = 5f;
+            
         }
         else if (sceneName == "Level2")
         {
             moveSpeed = 10f;
         }
+
 
         // changes play anim state to walk
         CurrentStates = PlayerStates.WALK;
@@ -168,6 +172,10 @@ public class Duchess : MonoBehaviour
             Menace.MIN_Instance.transform.position = new Vector3(105, (float)-3.640281, this.transform.position.z);
             Debug.Log("TP Menace LVL 4");
             passCheckpoint3 = true;
+        }
+        else if (collision.gameObject.name == "CheckLV1")
+        {
+            passhalfLV1 = true;
         }
         // Increase Menace's Speed & plays stomp if Duchess is in POV Cone
         else if (collision.gameObject.name == "POV_Cone" && !isHidden)
