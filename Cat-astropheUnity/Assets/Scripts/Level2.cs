@@ -12,6 +12,7 @@ public class Level2 : MonoBehaviour
         {
             Debug.Log("Transition");
             SceneManager.LoadScene("Level2", LoadSceneMode.Single);
+            PlayerPrefs.SetInt("passhalfLV", 0);
         }
     }
 }

@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
 
 public class Duchess : MonoBehaviour
 {
@@ -19,8 +20,9 @@ public class Duchess : MonoBehaviour
     public bool passCheckpoint1 = false;
     public bool passCheckpoint2 = false;
     public bool passCheckpoint3 = false;
-    public bool Level2 = false;
-    public bool passhalfLV1 = false;
+    public bool passendingwall = false;
+    public bool Level2;
+    public bool passhalfLV;
     public float hideTime = 1.0f;
     public float moveSpeed;
     //creates states for animations, when one state is on, it will play an animation.
@@ -55,11 +57,18 @@ public class Duchess : MonoBehaviour
     public void Awake()
     {
         Duchess.Instance = this;
+        if (PlayerPrefs.GetInt("passhalfLV") == 1)
+        { 
+            TransportCheckpoint();
+        }
+
+        //Debug.Log("d:"+PlayerPrefs.GetInt("passhalfLV");
     }
 
     // Controls Duchess Movement & Hide Mechanics
     void Update() 
     {
+
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             if (Input.GetKey(KeyCode.RightArrow) && !isHidden && canHide)
@@ -80,28 +89,25 @@ public class Duchess : MonoBehaviour
             isHidden = false;
             direction = true;
             Movement(direction);
-          
+
         }
         else if (isHidden && !canUnHide)
         {
             if (hideTime <= 0)
             {
                 canUnHide = true;
-                Debug.Log("the time has come.");
                 hideTime = 1.0f;
             }
             else
             {
                 hideTime -= Time.deltaTime;
-                Debug.Log(hideTime);
             }
         }
-        else if(!isHidden)
+        else if (!isHidden)
         {
             //Plays Idle Anim when no input
             CurrentStates = PlayerStates.IDLE;
         }
-
     }
     // Duchess movement based on direction
     public void Movement(bool direction)
@@ -111,9 +117,9 @@ public class Duchess : MonoBehaviour
 
         if (sceneName == "Level1")
         {
-            
+            moveSpeed = 5f;
         }
-        else if (sceneName == "Level2")
+        else if (sceneName == "Level2" && passendingwall != true)
         {
             moveSpeed = 10f;
         }
@@ -125,13 +131,11 @@ public class Duchess : MonoBehaviour
         {
             anim.flipX = false;
             rigidbodyComponent.velocity = new Vector2(moveSpeed, 0f);
-            print("Duchess Moved Right!");
         }
         else
         {
             anim.flipX = true;
             rigidbodyComponent.velocity = new Vector2(-moveSpeed, 0f);
-            print("Duchess Moved Left!");
         }
     }
 
@@ -140,7 +144,6 @@ public class Duchess : MonoBehaviour
     {
         // changes play anim state to hide
         CurrentStates = PlayerStates.HIDE;
-        print("Hiding!!!!");
         isHidden = true;
     }
 
@@ -152,51 +155,62 @@ public class Duchess : MonoBehaviour
             canHide = true;
             Debug.Log("CanHide");
         }
-
+        else if (collision.gameObject.name == "Back_Wall_0_Collider")
+        {
+            Duchess.Instance.Level2 = true;
+            Duchess.Instance.passhalfLV = false;
+        }
         // Menace Teleports when reaching a certain wall
         // Will change to loop/array situation also make menace faster each checkpoint
         else if (collision.gameObject.name == "Back_Wall_1_Collider" && !passCheckpoint1)
         {
             Menace.MIN_Instance.transform.position = new Vector3( 45, (float)-3.640281, this.transform.position.z);
-            Debug.Log("TP Menace LVL 2");
+            //Debug.Log("TP Menace LVL 2");
             passCheckpoint1 = true;
         }
         else if (collision.gameObject.name == "Back_Wall_2_Collider" && !passCheckpoint2)
         {
             Menace.MIN_Instance.transform.position = new Vector3(75, (float)-3.640281, this.transform.position.z);
-            Debug.Log("TP Menace LVL 3");
+            //Debug.Log("TP Menace LVL 3");
             passCheckpoint2 = true;
         }
         else if (collision.gameObject.name == "Back_Wall_3_Collider" && !passCheckpoint3)
         {
             Menace.MIN_Instance.transform.position = new Vector3(105, (float)-3.640281, this.transform.position.z);
-            Debug.Log("TP Menace LVL 4");
+            //Debug.Log("TP Menace LVL 4");
             passCheckpoint3 = true;
         }
         else if (collision.gameObject.name == "CheckLV1")
         {
-            passhalfLV1 = true;
+            Debug.Log("Passed Half");
+            passhalfLV = true;
+            PlayerPrefs.SetInt("passhalfLV", 1);
+        }
+        else if (collision.gameObject.name == "ending wall collider")
+        {
+            moveSpeed = 4f;
+            passendingwall = true;
+            
         }
         // Increase Menace's Speed & plays stomp if Duchess is in POV Cone
         else if (collision.gameObject.name == "POV_Cone" && !isHidden)
         {
-            Camera.CAM_Instance.Shake();
+            Cam.CAM_Instance.Shake();
             stomp.Play();
             if (Menace.MIN_Instance.isFacingRight)
             {
                 Menace.MIN_Instance.moveSpeed = Menace.MIN_Instance.moveChaseSpeed;
-                Debug.Log("RUNNN!");
+                //Debug.Log("RUNNN!");
             }
             else if (!Menace.MIN_Instance.isFacingRight)
             {
                 Menace.MIN_Instance.moveSpeed = -Menace.MIN_Instance.moveChaseSpeed;
-                Debug.Log("RUNNN!");
+                //Debug.Log("RUNNN!");
             }
         }
         // Game Over if Duchess and Menace collide
         else if (collision.gameObject.name == "Menace_Collider" && !Duchess.Instance.isHidden)
         {
-            Debug.Log("GameOver!");
             Duchess.Instance.Caught();
         }
     }
@@ -206,7 +220,6 @@ public class Duchess : MonoBehaviour
         if (collision.gameObject.name == "Furniture(Clone)")
         {
             canHide = false;
-            Debug.Log("Cannot Hide");
         }
         // Reduce Menace Speed if Duchess hides
         else if (collision.gameObject.name == "POV_Cone" || isHidden)
@@ -215,12 +228,12 @@ public class Duchess : MonoBehaviour
             if (Menace.MIN_Instance.isFacingRight)
             {
                 Menace.MIN_Instance.moveSpeed = moveSpeed;
-                Debug.Log("you good!");
+                //Debug.Log("you good!");
             }
             else if (!Menace.MIN_Instance.isFacingRight)
             {
                 Menace.MIN_Instance.moveSpeed = -moveSpeed;
-                Debug.Log("you good!");
+                //Debug.Log("you good!");
             }
         }
     }
@@ -230,4 +243,8 @@ public class Duchess : MonoBehaviour
         SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
     }
 
+    public void TransportCheckpoint()
+    {
+        Duchess.Instance.transform.position = new Vector2 (49.714f, -3.72f);
+    }    
 }

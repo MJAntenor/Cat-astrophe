@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class Camera : MonoBehaviour
+public class Cam : MonoBehaviour
 {
     // Randomly Positioned Furniture Generator
     public GameObject furniture;
     public GameObject box;
     public GameObject stool;
-    public static Camera CAM_Instance;
+    public static Cam CAM_Instance;
     public int numFurniturePerRoom = 7;
     public int duration = 1;
     public int magnitude = 10;
@@ -97,7 +98,8 @@ public class Camera : MonoBehaviour
 
     public void Awake()
     {
-        Camera.CAM_Instance = this;
+        Cam.CAM_Instance = this;
+        Cam.CAM_Instance.transform.position = new Vector3 (Duchess.Instance.transform.position.x, 0.3f, -10);
     }
     private void Update()
     {
@@ -121,6 +123,11 @@ public class Camera : MonoBehaviour
         {
             Debug.Log("Game Over bc Wall");
             Duchess.Instance.Caught();
+        }
+        if (Duchess.Instance.passendingwall == true)
+        {
+            this.transform.position = new Vector3 (Duchess.Instance.transform.position.x, this.transform.position.y, -10);
+            
         }
     }
 

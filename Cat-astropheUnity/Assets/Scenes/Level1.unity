@@ -1066,7 +1066,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1980346756, guid: 1474924d94a9b7c47a35fa8ce46e1860, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1087,7 +1087,7 @@ Transform:
   m_GameObject: {fileID: 380835763}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.6, y: -3.72, z: 0}
+  m_LocalPosition: {x: -15.395996, y: -3.72, z: 0}
   m_LocalScale: {x: 0.19060647, y: 0.19060647, z: 0.19060647}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1117,7 +1117,7 @@ MonoBehaviour:
   passCheckpoint2: 0
   passCheckpoint3: 0
   Level2: 0
-  passhalfLV1: 0
+  passhalfLV: 0
   hideTime: 1
   moveSpeed: 6
 --- !u!95 &380835769
@@ -3858,7 +3858,7 @@ Transform:
   m_GameObject: {fileID: 1673807734}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.2140045, y: 0.3, z: -10}
+  m_LocalPosition: {x: -9.51, y: 0.3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []

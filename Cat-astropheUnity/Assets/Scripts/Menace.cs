@@ -37,7 +37,6 @@ public class Menace : MonoBehaviour
 
         if (collision.gameObject.tag == "Wall")
         {
-            Debug.Log(collision.gameObject.name);
             if (isFacingRight)
             {
                 if (sceneName == "Level1")

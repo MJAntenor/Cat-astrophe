@@ -1,27 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CheckpointButton : MonoBehaviour
 {
     public static CheckpointButton checkpoint;
-    public bool hasPassedL2;
+    public bool transition = false;
+    public float xposHALF = 49.5f;
     // Starts game once button is pressed
     public void Awake()
     {
         CheckpointButton.checkpoint = this;
     }
-    public void OnMouseDown()
+    public void Update()
     {
-        if (Menace.MIN_Instance.moveSpeed == 10f || Menace.MIN_Instance.moveSpeed == -10f)
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            Debug.Log("Checkpoint 2");
-            SceneManager.LoadScene("Level2", LoadSceneMode.Single);
+            if (Duchess.Instance.Level2 == false && Duchess.Instance.passhalfLV == false)
+            {
+                Debug.Log("Checkpoint 1");
+                SceneManager.LoadScene("Level1", LoadSceneMode.Single);
+            }
+            else if (Duchess.Instance.Level2 == false && Duchess.Instance.passhalfLV == true)
+            {
+                Debug.Log("Checkpoint 1 HALF");
+                SceneManager.LoadScene("Level1", LoadSceneMode.Single);
+                Debug.Log(Duchess.Instance.passhalfLV);
+            }
+            else if (Duchess.Instance.Level2 == true && Duchess.Instance.passhalfLV == false)
+            {
+                Debug.Log("Checkpoint 2");
+                SceneManager.LoadScene("Level2", LoadSceneMode.Single);
+            }
+            else if (Duchess.Instance.Level2 == true && Duchess.Instance.passhalfLV == true)
+            {
+                Debug.Log("Checkpoint 2 HALF");
+                SceneManager.LoadScene("Level2", LoadSceneMode.Single);
+            }
+
+            
         }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            Debug.Log("Checkpoint 1");
+            Debug.Log("Back to Start");
             SceneManager.LoadScene("Level1", LoadSceneMode.Single);
+            PlayerPrefs.SetInt("passhalfLV", 0);
         }
     }
 }
