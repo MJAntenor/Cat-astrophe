@@ -200,12 +200,12 @@ public class Duchess : MonoBehaviour
             if (Menace.MIN_Instance.isFacingRight)
             {
                 Menace.MIN_Instance.moveSpeed = Menace.MIN_Instance.moveChaseSpeed;
-                //Debug.Log("RUNNN!");
+                Debug.Log("RUNNN!");
             }
             else if (!Menace.MIN_Instance.isFacingRight)
             {
                 Menace.MIN_Instance.moveSpeed = -Menace.MIN_Instance.moveChaseSpeed;
-                //Debug.Log("RUNNN!");
+                Debug.Log("RUNNN!");
             }
         }
         // Game Over if Duchess and Menace collide
@@ -222,7 +222,7 @@ public class Duchess : MonoBehaviour
             canHide = false;
         }
         // Reduce Menace Speed if Duchess hides
-        else if (collision.gameObject.name == "POV_Cone" || isHidden)
+        else if (isHidden || collision.gameObject.name == "POV_Cone")
         {
             stomp.Stop();
             if (Menace.MIN_Instance.isFacingRight)
