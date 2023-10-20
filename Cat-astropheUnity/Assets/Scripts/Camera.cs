@@ -17,8 +17,8 @@ public class Cam : MonoBehaviour
     public int duration = 1;
     public int magnitude = 10;
     public int minDistance = 2;
-    public float level1speed = .002f; 
-    public float level2speed = .005f;
+    public float level1speed; //= .002f; //.03 
+    public float level2speed; //= .005f; //.08
     public bool isBehind = false;
     float screenX;
     Vector2 pos;

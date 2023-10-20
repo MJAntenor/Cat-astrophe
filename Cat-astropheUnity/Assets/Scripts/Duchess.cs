@@ -190,7 +190,6 @@ public class Duchess : MonoBehaviour
         {
             moveSpeed = 4f;
             passendingwall = true;
-            
         }
         // Increase Menace's Speed & plays stomp if Duchess is in POV Cone
         else if (collision.gameObject.name == "POV_Cone" && !isHidden)

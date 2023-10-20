@@ -9,6 +9,8 @@ public class CheckpointButton : MonoBehaviour
     public static CheckpointButton checkpoint;
     public bool transition = false;
     public float xposHALF = 49.5f;
+    public float inputTime = 1.0f;
+
     // Starts game once button is pressed
     public void Awake()
     {
@@ -16,7 +18,8 @@ public class CheckpointButton : MonoBehaviour
     }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        inputTime -= Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && inputTime <= 0)
         {
             if (Duchess.Instance.Level2 == false && Duchess.Instance.passhalfLV == false)
             {
@@ -42,7 +45,7 @@ public class CheckpointButton : MonoBehaviour
 
             
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) && inputTime <= 0)
         {
             Debug.Log("Back to Start");
             SceneManager.LoadScene("Level1", LoadSceneMode.Single);
