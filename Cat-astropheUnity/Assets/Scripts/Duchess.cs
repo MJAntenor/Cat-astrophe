@@ -5,6 +5,7 @@ using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class Duchess : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class Duchess : MonoBehaviour
     public bool passendingwall = false;
     public bool Level2;
     public bool passhalfLV;
+    private float noscaleX = 0, noscaleY = 0, noscaleZ = 0, scaleX = 1, scaleY = 1, scaleZ = 1;
     public float hideTime = 1.0f;
     public float moveSpeed;
     //creates states for animations, when one state is on, it will play an animation.
@@ -68,28 +70,25 @@ public class Duchess : MonoBehaviour
     // Controls Duchess Movement & Hide Mechanics
     void Update() 
     {
-
-        if (Input.GetKey(KeyCode.LeftArrow))
+        
+        if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && canUnHide)
         {
-            if (Input.GetKey(KeyCode.RightArrow) && !isHidden && canHide)
-            {
-                Hide();
-                canUnHide = false;
-            }
-            else if (canUnHide)
-            {
-                isHidden = false;
-                direction = false;
-                Movement(direction);
-            }
+           isHidden = false;
+           direction = false;
+           Movement(direction);
         }
-        else if (Input.GetKey(KeyCode.RightArrow) && canUnHide)
-        {
 
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Hide();
+            canUnHide = false;
+        }
+
+        else if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && canUnHide)
+        {
             isHidden = false;
             direction = true;
             Movement(direction);
-
         }
         else if (isHidden && !canUnHide)
         {
@@ -103,11 +102,14 @@ public class Duchess : MonoBehaviour
                 hideTime -= Time.deltaTime;
             }
         }
+
         else if (!isHidden)
         {
+
             //Plays Idle Anim when no input
             CurrentStates = PlayerStates.IDLE;
         }
+
     }
     // Duchess movement based on direction
     public void Movement(bool direction)
@@ -117,7 +119,8 @@ public class Duchess : MonoBehaviour
 
         if (sceneName == "Level1")
         {
-            moveSpeed = 5f;
+            //moveSpeed = 5f;
+            moveSpeed = 12f;
         }
         else if (sceneName == "Level2" && passendingwall != true)
         {
